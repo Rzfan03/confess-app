@@ -1,13 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 import apiRouter from './routes/api.js';
 import { waService } from './services/whatsapp.js';
 import { getPendingConfessions, markSent, markFailed } from './db.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -15,13 +10,6 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use('/api', apiRouter);
-
-const frontendDist = join(__dirname, '..', 'public');
-app.use(express.static(frontendDist));
-app.get('*', (req, res) => {
-  if (req.path.startsWith('/api')) return;
-  res.sendFile(join(frontendDist, 'index.html'));
-});
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });

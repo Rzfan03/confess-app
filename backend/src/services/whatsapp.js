@@ -1,6 +1,7 @@
 import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth } = pkg;
 import qrcode from 'qrcode';
+import qrcodeTerminal from 'qrcode-terminal';
 import { execSync } from 'child_process';
 
 class WhatsAppService {

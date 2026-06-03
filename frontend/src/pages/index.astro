@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const API_URL = import.meta.env.PUBLIC_API_URL || 'http://localhost:3001';
 ---
 
 <Layout>
@@ -431,7 +432,7 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  const API = 'http://localhost:3001';
+  const API = import.meta.env.PUBLIC_API_URL || 'https://rich-top-ki.sgp.dom.my.id';
 
   const statusMap = {
     pending: { label: '⏳ Menunggu', cls: 'pending' },
