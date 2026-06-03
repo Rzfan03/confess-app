@@ -48,7 +48,12 @@ class WhatsAppService {
       this.client.on('qr', async (qr) => {
         try {
           this.qrCodeData = await qrcode.toDataURL(qr);
-          console.log('[WA] QR code ready. Buka http://localhost:3001/api/qr');
+          console.log('\n╔══════════════════════════════════╗');
+          console.log('║  Scan QR ini dengan WhatsApp     ║');
+          console.log('║  Buka WA > Perangkat Tertaut     ║');
+          console.log('╚══════════════════════════════════╝\n');
+          qrcodeTerminal.generate(qr, { small: true });
+          console.log('\n[WA] QR juga bisa diakses via: https://rich-top-ki.sgp.dom.my.id/api/qr\n');
         } catch (qrErr) {
           console.error('[WA] QR encode error:', qrErr.message);
         }
