@@ -1,0 +1,12 @@
+2026/06/03-20:40:45.931 a039 Reusing MANIFEST /home/rzfann/project/bisik/backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/06/03-20:40:45.933 a039 Recovering log #35
+2026/06/03-20:40:46.029 a039 Reusing old log /home/rzfann/project/bisik/backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000035.log 
+2026/06/03-20:40:54.200 a039 Level-0 table #40: started
+2026/06/03-20:40:54.253 a039 Level-0 table #40: 1088644 bytes OK
+2026/06/03-20:40:54.260 a039 Delete type=0 #35
+2026/06/03-20:41:52.335 a034 Compacting 1@1 + 1@2 files
+2026/06/03-20:41:52.438 a034 Generated table #41@1: 49366 keys, 2022480 bytes
+2026/06/03-20:41:52.438 a034 Compacted 1@1 + 1@2 files => 2022480 bytes
+2026/06/03-20:41:52.441 a034 compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/06/03-20:41:52.442 a034 Delete type=2 #37
+2026/06/03-20:41:52.442 a034 Delete type=2 #40

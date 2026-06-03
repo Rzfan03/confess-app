@@ -1,0 +1,528 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="container">
+    <header class="hero">
+      <div class="hero-icon">💌</div>
+      <h1 class="hero-title">Bisik</h1>
+      <p class="hero-subtitle">
+        Kirim pesan rahasia ke crush kamu.<br />
+        Tanpa ketahuan siapa pengirimnya.
+      </p>
+      <div class="hero-actions">
+        <a href="#form" class="btn btn-primary">Tulis Pesan</a>
+      </div>
+    </header>
+
+    <section class="section" id="form">
+      <div class="section-label">01</div>
+      <h2 class="section-title">Tulis Pesan</h2>
+      <p class="section-desc">Isi data di bawah, nanti kita kirimkan langsung ke crush kamu.</p>
+
+      <form class="card" id="confessForm" novalidate>
+        <div class="form-group">
+          <label for="senderName">Namamu <span class="optional">(opsional, bisa dikosongin)</span></label>
+          <input type="text" id="senderName" placeholder="Cth: Anonim..." />
+        </div>
+
+        <div class="form-group">
+          <label for="crushName">Nama Crush <span class="required">*</span></label>
+          <input type="text" id="crushName" placeholder="Siapa crush kamu?" required />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Isi Pesan <span class="required">*</span></label>
+          <textarea id="message" rows="5" placeholder="Apa yang mau kamu sampaikan?" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="contactValue">Nomor WhatsApp Crush <span class="required">*</span></label>
+          <input type="tel" id="contactValue" placeholder="Cth: 08123456789" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+          <span class="btn-text">Kirim Pesan ✨</span>
+          <span class="btn-loading" hidden>Mengirim...</span>
+        </button>
+      </form>
+
+      <div class="card success-card" id="successCard" hidden>
+        <div class="success-icon" id="successIcon">💌</div>
+        <h3 id="successTitle">Pesan Terkirim!</h3>
+        <div class="success-detail">
+          <div class="success-row">
+            <span class="success-label">Status</span>
+            <span class="status-badge" id="resultBadge">—</span>
+          </div>
+          <div class="success-row">
+            <span class="success-label">ID</span>
+            <span class="tracking-id" id="trackingId">--</span>
+          </div>
+          <div class="success-row">
+            <span class="success-label">Crush</span>
+            <span class="success-value" id="resultCrush">—</span>
+          </div>
+          <div class="success-row">
+            <span class="success-label">Via</span>
+            <span class="success-value" id="resultContact">—</span>
+          </div>
+          <div class="success-row">
+            <span class="success-label">Pesan</span>
+            <span class="success-value" id="resultMessage">—</span>
+          </div>
+          <div class="success-row success-error" id="resultError" hidden>
+            <span class="success-label">Error</span>
+            <span class="success-value" id="resultErrorMsg">—</span>
+          </div>
+        </div>
+        <button class="btn btn-secondary" onclick="resetForm()">Tulis Pesan Lain</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Dibuat dengan 💖 untuk kamu yang malu-malu tapi pengen confess</p>
+    </footer>
+  </div>
+</Layout>
+
+<style is:global>
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Blobs */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 {
+    width: 400px;
+    height: 400px;
+    background: var(--rose);
+    opacity: 0.08;
+    top: -120px;
+    right: -100px;
+  }
+  .blob-2 {
+    width: 500px;
+    height: 500px;
+    background: var(--lavender);
+    opacity: 0.06;
+    bottom: -200px;
+    left: -150px;
+  }
+  .blob-3 {
+    width: 300px;
+    height: 300px;
+    background: var(--mint);
+    opacity: 0.06;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 80px 0 64px;
+  }
+
+  .hero-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin-top: 16px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* Sections */
+  .section {
+    padding: 32px 0 48px;
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--rose);
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+  }
+
+  .section-desc {
+    color: var(--text-muted);
+    margin-top: 8px;
+    margin-bottom: 28px;
+  }
+
+  /* Card */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Form */
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .optional {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .required {
+    color: var(--rose);
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+    color: var(--text);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--rose);
+    box-shadow: 0 0 0 3px rgba(255, 143, 163, 0.15);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose), var(--lavender));
+    color: white;
+    box-shadow: 0 4px 16px rgba(255, 143, 163, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255, 143, 163, 0.4);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--rose);
+    color: var(--rose);
+  }
+
+  .btn-full {
+    width: 100%;
+  }
+
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  /* Success */
+  .success-card {
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .success-icon {
+    font-size: 56px;
+    margin-bottom: 12px;
+  }
+
+  .success-card h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+
+  .success-detail {
+    text-align: left;
+    margin-bottom: 24px;
+  }
+
+  .success-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+
+  .success-row:last-child {
+    border-bottom: none;
+  }
+
+  .success-label {
+    color: var(--text-muted);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .success-error .success-label {
+    color: #dc2626;
+  }
+
+  .success-row .success-value {
+    text-align: right;
+    font-size: 14px;
+    max-width: 60%;
+    word-break: break-word;
+  }
+
+  .success-row .tracking-id {
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--rose);
+    background: linear-gradient(135deg, var(--rose), var(--lavender));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 0;
+    margin: 0;
+    border: none;
+  }
+
+  .status-badge {
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .status-badge.pending {
+    background: var(--cream);
+    color: #92400e;
+  }
+
+  .status-badge.sent {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .status-badge.failed {
+    background: var(--peach);
+    color: #991b1b;
+  }
+
+  .status-error {
+    color: #dc2626;
+  }
+
+  .status-error .status-label,
+  .success-error .success-label {
+    color: #dc2626;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 48px 0 32px;
+    color: var(--text-light);
+    font-size: 14px;
+  }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    .hero-title { font-size: 44px; }
+    .hero { padding: 56px 0 40px; }
+    .hero-icon { font-size: 48px; }
+    .card { padding: 24px; }
+    .section-title { font-size: 26px; }
+  }
+</style>
+
+<script>
+  const API = 'http://localhost:3001';
+
+  const statusMap = {
+    pending: { label: '⏳ Menunggu', cls: 'pending' },
+    sent: { label: '✅ Terkirim', cls: 'sent' },
+    failed: { label: '❌ Gagal', cls: 'failed' },
+  };
+
+  function fillStatusBadge(el, status) {
+    const s = statusMap[status] || { label: status, cls: '' };
+    el.textContent = s.label;
+    el.className = `status-badge ${s.cls}`;
+  }
+
+  // ── Submit Confession ──
+  const form = document.getElementById('confessForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const btnText = submitBtn.querySelector('.btn-text');
+  const btnLoading = submitBtn.querySelector('.btn-loading');
+  const successCard = document.getElementById('successCard');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const senderName = document.getElementById('senderName').value.trim();
+    const crushName = document.getElementById('crushName').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const contactValue = document.getElementById('contactValue').value.trim();
+
+    if (!crushName || !message || !contactValue) {
+      alert('Harap isi semua field yang wajib!');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    btnText.hidden = true;
+    btnLoading.hidden = false;
+
+    try {
+      const res = await fetch(`${API}/api/confess`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senderName, crushName, message, contactValue }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Gagal mengirim pesan');
+      }
+
+      form.hidden = true;
+      successCard.hidden = false;
+
+      const icon = document.getElementById('successIcon');
+      const title = document.getElementById('successTitle');
+      if (data.status === 'sent') {
+        icon.textContent = '🎉';
+        title.textContent = 'Pesan Terkirim!';
+      } else if (data.status === 'pending') {
+        icon.textContent = '⏳';
+        title.textContent = 'Menunggu WhatsApp Terhubung';
+      } else {
+        icon.textContent = '😢';
+        title.textContent = 'Pesan Gagal Dikirim';
+      }
+
+      fillStatusBadge(document.getElementById('resultBadge'), data.status);
+      document.getElementById('trackingId').textContent = data.id;
+      document.getElementById('resultCrush').textContent = crushName;
+      document.getElementById('resultContact').textContent = `WA: ${contactValue}`;
+      document.getElementById('resultMessage').textContent = message;
+
+      const resultError = document.getElementById('resultError');
+      if ((data.status === 'failed' || data.status === 'pending') && data.errorMessage) {
+        resultError.hidden = false;
+        document.getElementById('resultErrorMsg').textContent = data.errorMessage;
+      } else {
+        resultError.hidden = true;
+      }
+    } catch (err) {
+      alert(err.message || 'Terjadi kesalahan. Coba lagi nanti.');
+    } finally {
+      submitBtn.disabled = false;
+      btnText.hidden = false;
+      btnLoading.hidden = true;
+    }
+  });
+
+  window.resetForm = function () {
+    form.reset();
+    form.hidden = false;
+    successCard.hidden = true;
+  };
+</script>
